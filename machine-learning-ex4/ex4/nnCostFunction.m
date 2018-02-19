@@ -81,11 +81,8 @@ for i = 1:m
     h = a3;
 
     yy = zeros(num_labels, 1);
-    if y(i) == 0
-        yy(10) = 1;
-    else
-        yy(y(i)) = 1;
-    end
+    t = y(i) == 0;
+    yy(t * 10 + ~t * y(i)) = 1;
     J += -yy' * log(h) - (1 - yy)' * log(1 - h);
 end
 J *= 1/m
