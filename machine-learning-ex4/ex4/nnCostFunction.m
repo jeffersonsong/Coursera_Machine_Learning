@@ -62,7 +62,6 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 Y = zeros(m, num_labels);
-size(Y)
 for i = 1:m
     t = y(i) == 0;
     Y(i, t * 10 + ~t * y(i)) = 1;
@@ -83,6 +82,10 @@ for i = 1:m
     J += -yy' * log(h) - (1 - yy)' * log(1 - h);
 end
 J *= 1/m
+
+theta1_vec = Theta1(:, 2:end)(:);
+theta2_vec = Theta2(:, 2:end)(:);
+J += lambda / (2*m) * (theta1_vec' * theta1_vec + theta2_vec' * theta2_vec);
 
 % -------------------------------------------------------------
 
