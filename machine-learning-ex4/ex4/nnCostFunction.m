@@ -61,24 +61,34 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+%Y = zeros(m, num_labels);
+%for i = 1:m
+%    j = y(i);
+%    if j == 0
+%        j = 10;
+%    end
+%    Y(i, j) = 1;
+%end
 
+for i = 1:m
+    a1 = X(i, :)';
+    a1 = [1; a1];
+    z2 = Theta1 * a1;
+    a2 = sigmoid(z2);
+    a2 = [1; a2];
+    z3 = Theta2 * a2;
+    a3 = sigmoid(z3);
+    h = a3;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    yy = zeros(num_labels, 1);
+    if y(i) == 0
+        yy(10) = 1;
+    else
+        yy(y(i)) = 1;
+    end
+    J += -yy' * log(h) - (1 - yy)' * log(1 - h);
+end
+J *= 1/m
 
 % -------------------------------------------------------------
 
