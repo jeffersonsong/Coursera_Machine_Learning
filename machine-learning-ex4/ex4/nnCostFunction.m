@@ -29,6 +29,8 @@ m = size(X, 1);
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
+Delta1 = zeros(size(Theta1));
+Delta2 = zeros(size(Theta2));
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -61,10 +63,9 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-X = [ones(m, 1) X];
-
 for i = 1:m
     a1 = X(i, :)';
+    a1 = [1; a1];
     z2 = Theta1 * a1;
     a2 = sigmoid(z2);
     a2 = [1; a2];
@@ -74,10 +75,22 @@ for i = 1:m
 
     yvec = vectorizeYVal(y(i), num_labels);
     J += -yvec' * log(h) - (1 - yvec)' * log(1 - h);
+    delta3 = a3 - yvec;
+    delta2 = (Theta2' * delta3) .* (a2 .* (1 - a2));
+    Delta2 += (delta3 * a2');
+    Delta1 += (delta2(2:end) * a1');
 end
-J *= 1/m
+J *= 1/m;
 
 J += regularizationCost(Theta1, Theta2, m, lambda);
+
+Theta1_copy = Theta1(:,:);
+Theta1_copy(1,:) = 0;
+Theta1_grad = 1/m * Delta1 + lambda * Theta1_copy;
+
+Theta2_copy = Theta2(:,:);
+Theta2_copy(1,:) = 0;
+Theta2_grad = 1/m * Delta2 + lambda * Theta2_copy;
 
 % -------------------------------------------------------------
 
