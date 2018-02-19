@@ -85,12 +85,12 @@ J *= 1/m;
 J += regularizationCost(Theta1, Theta2, m, lambda);
 
 Theta1_copy = Theta1(:,:);
-Theta1_copy(1,:) = 0;
-Theta1_grad = 1/m * Delta1 + lambda * Theta1_copy;
+Theta1_copy(:,1) = 0;
+Theta1_grad = 1/m * (Delta1 +  lambda * Theta1_copy);
 
 Theta2_copy = Theta2(:,:);
-Theta2_copy(1,:) = 0;
-Theta2_grad = 1/m * Delta2 + lambda * Theta2_copy;
+Theta2_copy(:,1) = 0;
+Theta2_grad = 1/m * (Delta2 + lambda * Theta2_copy);
 
 % -------------------------------------------------------------
 
