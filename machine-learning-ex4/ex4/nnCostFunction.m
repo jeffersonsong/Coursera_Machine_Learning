@@ -72,16 +72,12 @@ for i = 1:m
     a3 = sigmoid(z3);
     h = a3;
 
-    yvec = zeros(num_labels, 1);
-    t = y(i) == 0;
-    yvec(t * 10 + ~t * y(i)) = 1;
+    yvec = vectorizeYVal(y(i), num_labels);
     J += -yvec' * log(h) - (1 - yvec)' * log(1 - h);
 end
 J *= 1/m
 
-theta1_vec = Theta1(:, 2:end)(:);
-theta2_vec = Theta2(:, 2:end)(:);
-J += lambda / (2*m) * (theta1_vec' * theta1_vec + theta2_vec' * theta2_vec);
+J += regularizationCost(Theta1, Theta2, m, lambda);
 
 % -------------------------------------------------------------
 
@@ -91,4 +87,16 @@ J += lambda / (2*m) * (theta1_vec' * theta1_vec + theta2_vec' * theta2_vec);
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 
+end
+
+function yvec = vectorizeYVal(yVal, num_labels)
+    yvec = zeros(num_labels, 1);
+    t = yVal == 0;
+    yvec(t * 10 + ~t * yVal) = 1;
+end
+
+function cost = regularizationCost(Theta1, Theta2, m, lambda)
+    theta1_vec = Theta1(:, 2:end)(:);
+    theta2_vec = Theta2(:, 2:end)(:);
+    cost = lambda / (2*m) * (theta1_vec' * theta1_vec + theta2_vec' * theta2_vec);
 end
