@@ -77,8 +77,9 @@ for i = 1:m
     J += -yvec' * log(h) - (1 - yvec)' * log(1 - h);
     delta3 = a3 - yvec;
     delta2 = (Theta2' * delta3) .* (a2 .* (1 - a2));
+    delta2 = delta2(2:end);
     Delta2 += (delta3 * a2');
-    Delta1 += (delta2(2:end) * a1');
+    Delta1 += (delta2 * a1');
 end
 J *= 1/m;
 
