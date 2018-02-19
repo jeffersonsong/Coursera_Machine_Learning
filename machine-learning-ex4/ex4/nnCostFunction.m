@@ -68,9 +68,10 @@ for i = 1:m
     Y(i, t * 10 + ~t * y(i)) = 1;
 end
 
+X = [ones(m, 1) X];
+
 for i = 1:m
     a1 = X(i, :)';
-    a1 = [1; a1];
     z2 = Theta1 * a1;
     a2 = sigmoid(z2);
     a2 = [1; a2];
