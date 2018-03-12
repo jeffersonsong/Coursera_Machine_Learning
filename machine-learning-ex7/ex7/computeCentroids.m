@@ -28,12 +28,7 @@ centroids = zeros(K, n);
 
 for k = 1:K
     idx_k = find(idx == k);
-    count = size(idx_k, 1);
-    total = sum(X(idx_k, :), 1);
-    
-    if (size(idx_k) > 0)
-        centroids(k, :) = total ./ count;
-    end
+    centroids(k, :) = mean(X(idx_k, :), 1);
 end
 
 % =============================================================
