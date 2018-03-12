@@ -27,9 +27,8 @@ for i = 1:m
     j = 0;
     min = Inf;
     for k = 1:K;
-        mu_k = centroids(k, :)';
-        v = x_i - mu_k;
-        dist = v' * v;
+        v = X(i, :) - centroids(k, :);
+        dist = v * v';
         if (dist < min)
             j = k;
             min = dist;
