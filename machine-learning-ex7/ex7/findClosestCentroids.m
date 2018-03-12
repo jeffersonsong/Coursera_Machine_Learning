@@ -22,18 +22,15 @@ idx = zeros(size(X,1), 1);
 %
 
 m = size(X, 1);
+dist = zeros(K, 1);
+
 for i = 1:m
     x_i = X(i, :)';
-    j = 0;
-    min = Inf;
     for k = 1:K;
         v = X(i, :) - centroids(k, :);
-        dist = v * v';
-        if (dist < min)
-            j = k;
-            min = dist;
-        end
+        dist(k) = v * v';
     end
+    [_, j] = min(dist);
     idx(i) = j;
 end
 
