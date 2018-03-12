@@ -25,11 +25,8 @@ m = size(X, 1);
 dist = zeros(K, 1);
 
 for i = 1:m
-    x_i = X(i, :)';
-    for k = 1:K;
-        v = X(i, :) - centroids(k, :);
-        dist(k) = v * v';
-    end
+    V = repmat(X(i, :), K, 1) - centroids;
+    dist = sum(V.^2, 2);
     [_, j] = min(dist);
     idx(i) = j;
 end
