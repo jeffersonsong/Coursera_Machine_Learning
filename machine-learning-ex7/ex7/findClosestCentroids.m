@@ -21,14 +21,15 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-M = size(X, 1);
-for i = 1:M
+m = size(X, 1);
+for i = 1:m
     x_i = X(i, :)';
     j = 0;
     min = Inf;
     for k = 1:K;
         mu_k = centroids(k, :)';
-        dist = (x_i - mu_k)' * (x_i - mu_k);
+        v = x_i - mu_k;
+        dist = v' * v;
         if (dist < min)
             j = k;
             min = dist;
