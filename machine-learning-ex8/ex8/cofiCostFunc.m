@@ -40,7 +40,9 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 Y_error = X * Theta' - Y;
-J = 1/2 * sum(sum((R .* Y_error) .^ 2));
+J = 1/2 * sum(sum((R .* Y_error) .^ 2)) ...
+    + (lambda/2) * sum(sum(Theta .^ 2)) ...
+    + (lambda/2) * sum(sum(X .^ 2));
 
 for i=1:num_movies
     idx = find(R(i, :)==1);
